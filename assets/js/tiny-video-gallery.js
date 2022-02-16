@@ -16,7 +16,8 @@ document.onreadystatechange = function () {
 
 					for (let k = 0; k < items.length; k++) {
 						items[k].style.display = "none";
-						if (target == items[k].getAttribute("data-id")) {
+						var cats = items[k].getAttribute("data-id").split(",");
+						if (jQuery.inArray(target, cats) !== -1) {
 							items[k].style.display = "block";
 						}
 						if (target == "all") {
