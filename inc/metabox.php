@@ -183,7 +183,7 @@ class VideoMetaDataMetabox {
         foreach ($this->fields as $field) {
             if ($field['id'] == 'tiny_video_source') {
                 $vid_id = $this->convertYoutube($_POST[$field['id']]);
-                $_POST[$field['id']] = esc_url_raw("https://www.youtube.com/embed/".$vid_id);
+                $_POST[$field['id']] = esc_url_raw("https://www.youtube.com/embed/" . $vid_id);
             }
             if (isset($_POST[$field['id']])) {
                 switch ($field['type']) {
@@ -210,11 +210,8 @@ class VideoMetaDataMetabox {
 
 
     private function convertYoutube($string) {
-        return preg_replace(
-            "/\s*[a-zA-Z\/\/:\.]*youtu(be.com\/watch\?v=|.be\/)([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i",
-            "$2",
-            $string
-        );
+        preg_match('/(.*?)(^|\/|v=)([a-z0-9_-]{11})(.*)?/im', $string, $match);
+        return $match[3];
     }
 
 
