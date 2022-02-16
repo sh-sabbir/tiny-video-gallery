@@ -195,11 +195,14 @@ class VideoMetaDataMetabox {
                         break;
                 }
 
-                if (!empty($vid_url) && $field['id'] == 'tiny_video_thumb' && empty($_POST[$field['id']])) {
-                    // $url_components = parse_url($vid_url);
-                    // parse_str($url_components['query'], $params);
-                    // $vid_id = $params['v'];
-                    $_POST[$field['id']] = esc_url_raw("https://img.youtube.com/vi/" . $vid_id . "/maxresdefault.jpg");
+                if ($field['id'] == 'tiny_video_thumb' && empty($_POST[$field['id']])) {
+
+                    $thumb = esc_url_raw("https://img.youtube.com/vi/" . $vid_id . "/maxresdefault.jpg");
+                    if ($this->check_url_exists($thumb)) {
+                        $_POST[$field['id']] = $thumb;
+                    } else {
+                        $_POST[$field['id']] = esc_url_raw("https://img.youtube.com/vi/" . $vid_id . "/0.jpg");
+                    }
                 }
                 update_post_meta($post_id, $field['id'], $_POST[$field['id']]);
             } else if ($field['type'] === 'checkbox') {
@@ -212,6 +215,15 @@ class VideoMetaDataMetabox {
     private function convertYoutube($string) {
         preg_match('/(.*?)(^|\/|v=)([a-z0-9_-]{11})(.*)?/im', $string, $match);
         return $match[3];
+    }
+
+
+    private function check_url_exists($url) {
+        $headers = @get_headers($url);
+        if ($headers || strpos($headers[0], '404')) {
+            return false;
+        }
+        return true;
     }
 
 
