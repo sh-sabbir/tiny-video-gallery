@@ -1,12 +1,12 @@
 === Tiny Video Gallery ===
-Version: 1.0.0
+Version: 1.0.1
 Author: Sabbir Hasan
 Author URI: https://iamsabbir.dev
 Contributors: sabbirshouvo
 Tags: video gallery, Elementor Video Gallery
 Requires at least: 5.0
 Tested up to: 5.9
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
