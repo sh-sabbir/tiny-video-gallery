@@ -11,11 +11,11 @@
  * @wordpress-plugin
  * Plugin Name:       Tiny Video Gallery
  * Description:       A tiny video gallery plugin with category and filtering support. Native support for Elementor, Gutenberg, WP Bakery, Visual Composer and other pagebuilder with shortcode.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 5.0
  * Requires PHP:      7.0
- * Author:            Sabbir Hasan
- * Author URI:        https://iamsabbir.dev
+ * Author:            TinyXwp
+ * Author URI:        https://tinyxwp.com
  * Text Domain:       tiny-video-gallery
  * License:           GPL v2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt

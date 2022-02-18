@@ -93,3 +93,17 @@
 		-webkit-transform: rotate(360deg);
 	}
 }
+
+@media only screen and (max-width: 1199px) {
+	.videoPlayerOverlay .videoPlayerWrap {
+		max-width: 90%;
+		max-height: 40vh;
+	}
+}
+
+@media only screen and (max-width: 560px) {
+	.videoPlayerOverlay .videoPlayerWrap {
+		max-width: 90%;
+		max-height: 33.33vh;
+	}
+}
