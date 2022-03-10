@@ -1,0 +1,78 @@
+#tvg_yt_stat {
+    display: none;
+}
+
+
+.tvg_yt_stat_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.tvg_yt_stat_container {
+    background-color: #fff;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    border-radius: 4px;
+    padding: 30px 40px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    box-shadow: 2px 8px 23px 3px rgb(0 0 0 / 20%);
+}
+
+.tvg_yt_stat_container .loading{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.tvg_yt_stat_container .heading {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.25;
+    color: #495157;
+    box-sizing: border-box;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+#tvg_yt_stat_summary{
+    text-align: center;
+}
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+}
+
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 54px;
+    height: 54px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #2271b1;
+    border-color: #2271b1 transparent #2271b1 transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

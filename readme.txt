@@ -1,8 +1,8 @@
 === Tiny Video Gallery ===
-Version: 1.0.1
+Version: 2.0.1
 Author: Sabbir Hasan
 Author URI: https://iamsabbir.dev
-Contributors: sabbirshouvo
+Contributors: tinyxwp, sabbirshouvo
 Tags: video gallery, Elementor Video Gallery
 Requires at least: 5.0
 Tested up to: 5.9

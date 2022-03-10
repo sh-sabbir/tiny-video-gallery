@@ -18,14 +18,16 @@ class VideoMetaDataMetabox {
             ),
         ),
         array(
-            'label' => 'Youtube Url',
+            'label' => 'Youtube Video ID',
             'id' => 'tiny_video_source',
             'type' => 'text',
+            'prefix' => 'https://www.youtube.com/embed/'
         ),
         array(
             'label' => 'Youtube Thumbnail',
             'id' => 'tiny_video_thumb',
             'type' => 'url',
+            'prefix' => ''
         )
     );
 
@@ -106,10 +108,23 @@ class VideoMetaDataMetabox {
                     );
                     break;
 
+                case 'url':
+                    $input = sprintf(
+                        '%s<input %s id="%s" name="%s" type="%s" value="%s">',
+                        isset($field['prefix']) ? $field['prefix'] : 'nothing',
+                        $field['type'] !== 'color' ? 'style="width: 100%"' : '',
+                        $field['id'],
+                        $field['id'],
+                        $field['type'],
+                        $meta_value
+                    );
+                    break;
+
                 default:
                     $input = sprintf(
-                        '<input %s id="%s" name="%s" type="%s" value="%s">',
-                        $field['type'] !== 'color' ? 'style="width: 100%"' : '',
+                        '%s<input %s id="%s" name="%s" type="%s" value="%s">',
+                        isset($field['prefix']) ? $field['prefix'] : 'nothing',
+                        $field['type'] !== 'color' ? 'style="max-width: 100%"' : '',
                         $field['id'],
                         $field['id'],
                         $field['type'],
@@ -182,16 +197,19 @@ class VideoMetaDataMetabox {
         $vid_id = '';
         foreach ($this->fields as $field) {
             if ($field['id'] == 'tiny_video_source') {
-                $vid_id = $this->convertYoutube($_POST[$field['id']]);
-                $_POST[$field['id']] = esc_url_raw("https://www.youtube.com/embed/" . $vid_id);
+                $vid_id = $_POST[$field['id']];
+                // $_POST[$field['id']] = esc_url_raw("https://www.youtube.com/embed/" . $vid_id);
             }
             if (isset($_POST[$field['id']])) {
                 switch ($field['type']) {
                     case 'email':
                         $_POST[$field['id']] = sanitize_email($_POST[$field['id']]);
                         break;
-                    case 'text':
+                    case 'url':
                         $_POST[$field['id']] = esc_url_raw($_POST[$field['id']]);
+                        break;
+                    case 'text':
+                        $_POST[$field['id']] = $_POST[$field['id']];
                         break;
                 }
 
@@ -219,11 +237,14 @@ class VideoMetaDataMetabox {
 
 
     private function check_url_exists($url) {
-        $headers = @get_headers($url);
-        if ($headers || strpos($headers[0], '404')) {
-            return false;
-        }
-        return true;
+        // $headers = @get_headers($url);
+        // if ($headers || strpos($headers[0], '404')) {
+        //     return false;
+        // }
+        // return true;
+
+        $response = wp_remote_head( $url );
+	    return 200 === wp_remote_retrieve_response_code( $response );
     }
 
 

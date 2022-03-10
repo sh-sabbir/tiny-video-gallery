@@ -52,7 +52,7 @@ function tpvg_render($col_count) {
                 <?php
                 $q_query_args = array(
                     'post_type' => array('tiny_video_item'),
-                    'order' => 'DESC',
+                    'order' => 'ASC',
                     'orderby' => 'date',
                     'nopaging' => true,
                 );

@@ -11,7 +11,7 @@
  * @wordpress-plugin
  * Plugin Name:       Tiny Video Gallery
  * Description:       A tiny video gallery plugin with category and filtering support. Native support for Elementor, Gutenberg, WP Bakery, Visual Composer and other pagebuilder with shortcode.
- * Version:           1.0.1
+ * Version:           2.0.1
  * Requires at least: 5.0
  * Requires PHP:      7.0
  * Author:            TinyXwp
@@ -43,12 +43,14 @@ if (!class_exists('TinyVideoGallery')) {
             $this->setup_actions();
 
             add_action('wp_enqueue_scripts', [$this, 'load_scripts']);
+            add_action('admin_enqueue_scripts', [$this, 'load_scripts_admin']);
         }
 
         /**
          * Loading Deependency
          */
         public function load_dependency() {
+
             // Register Custom Post Type
             require(TPVG_DIR_PATH . 'inc/cpt.php');
 
@@ -60,6 +62,10 @@ if (!class_exists('TinyVideoGallery')) {
 
             // Register Widgets
             require(TPVG_DIR_PATH . 'inc/widgets.php');
+
+            // Register Cron Functionality
+            require(TPVG_DIR_PATH . 'inc/settings.php');
+            require(TPVG_DIR_PATH . 'inc/cron.php');
         }
 
 
@@ -72,6 +78,11 @@ if (!class_exists('TinyVideoGallery')) {
 
             wp_enqueue_style('tiny-video-gallery-css', TPVG_ASSETS . 'css/tiny-video-gallery.css');
             wp_enqueue_script('tiny-video-gallery-js', TPVG_ASSETS . 'js/tiny-video-gallery.js', array('jquery'));
+        }
+
+        public function load_scripts_admin($hook) {
+            wp_enqueue_style('tiny-video-gallery-admin-css', TPVG_ASSETS . 'css/tvg-admin.css');
+            wp_enqueue_script('tiny-video-gallery-admin-js', TPVG_ASSETS . 'js/tvg-admin.js', array('jquery'));
         }
 
         /**
@@ -89,6 +100,9 @@ if (!class_exists('TinyVideoGallery')) {
         public static function activate() {
             //Activation code in here
             //TODO: Handle Custom Meta Here
+            if (! wp_next_scheduled ( 'tvg_yt_sync_event')) {
+                wp_schedule_event( time(), 'four_hourly', 'tvg_yt_sync_event');
+            }
         }
 
         /**
@@ -97,6 +111,7 @@ if (!class_exists('TinyVideoGallery')) {
         public static function deactivate() {
             //Deactivation code in here
             //TODO: Handle Custom Meta Here
+            wp_clear_scheduled_hook( 'tvg_yt_sync_event' );
         }
     }
 
