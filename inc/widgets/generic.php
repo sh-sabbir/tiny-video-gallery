@@ -52,7 +52,7 @@ function tpvg_render($col_count) {
                 <?php
                 $q_query_args = array(
                     'post_type' => array('tiny_video_item'),
-                    'order' => 'ASC',
+                    'order' => 'DESC',
                     'orderby' => 'date',
                     'nopaging' => true,
                 );
@@ -73,8 +73,7 @@ function tpvg_render($col_count) {
                         $cats = wp_list_pluck($cats, 'slug');
                         $cats = implode(",", $cats);
                 ?>
-
-                        <div id="gallery-item-<?php echo esc_attr(get_the_ID()); ?>" class="tpvg_gallery-item" data-id="<?php echo esc_attr($cats); ?>" data-video="<?php echo esc_url($vid_url); ?>">
+                        <div id="gallery-item-<?php echo esc_attr(get_the_ID()); ?>" class="tpvg_gallery-item" data-id="<?php echo esc_attr($cats); ?>" data-video="<?php echo esc_url('https://www.youtube.com/embed/' . $vid_url); ?>">
                             <div class="inner">
                                 <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($title); ?>">
                                 <div class="tpvg-caption"><?php echo esc_attr($title); ?></div>

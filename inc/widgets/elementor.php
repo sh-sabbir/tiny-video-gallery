@@ -2,6 +2,8 @@
 
 namespace TinyVideoGallery\Widgets;
 
+use Elementor\Widget_Base;
+
 class Tiny_Video_Gallery extends Widget_Base {
 
     /**
@@ -61,8 +63,6 @@ class Tiny_Video_Gallery extends Widget_Base {
          *
          **/
 
-
-        $this->end_controls_section();
         $this->start_controls_section(
             'content_section',
             [
@@ -82,6 +82,151 @@ class Tiny_Video_Gallery extends Widget_Base {
                 'default' => '3'
             ]
         );
+        $this->end_controls_section();
+
+        $this->start_controls_section(
+            'content_style',
+            [
+                'label' => __('Gallery Style', 'tiny-video-gallery'),
+                'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+            ]
+        );
+
+        $this->add_responsive_control(
+			'tvg_item_spacing',
+			[
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Item Spacing', 'plugin-name' ),
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'devices' => [ 'desktop', 'tablet', 'mobile' ],
+				'desktop_default' => [
+					'size' => 8,
+					'unit' => 'px',
+				],
+				'tablet_default' => [
+					'size' => 8,
+					'unit' => 'px',
+				],
+				'mobile_default' => [
+					'size' => 8,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .tpvg_gallery-wrap .tpvg_gallery-items .tpvg_gallery-item' => 'padding: calc({{SIZE}}{{UNIT}} / 2);',
+				],
+			]
+		);
+
+        $this->add_group_control(
+			\Elementor\Group_Control_Border::get_type(),
+			[
+				'name' => 'tvg_item_border',
+                'label' => esc_html__( 'Item Border', 'tiny-video-gallery' ),
+				'selector' => '{{WRAPPER}} .tpvg_gallery-wrap .tpvg_gallery-items .tpvg_gallery-item .inner'
+                
+			]
+		);
+
+        $this->add_responsive_control(
+			'tvg_item_border_radius',
+			[
+				'label'      => __( 'Border Radius', 'eazygrid-elementor' ),
+				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .tpvg_gallery-wrap .tpvg_gallery-items .tpvg_gallery-item .inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+        $this->add_responsive_control(
+			'caption_text_align',
+			[
+                'separator' => 'before',
+				'label'                => __( 'Alignment', 'eazygrid-elementor' ),
+				'type'                 => \Elementor\Controls_Manager::CHOOSE,
+				'options'              => [
+					'left'   => [
+						'title' => __( 'Left', 'eazygrid-elementor' ),
+						'icon'  => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => __( 'Center', 'eazygrid-elementor' ),
+						'icon'  => 'eicon-text-align-center',
+					],
+					'right'  => [
+						'title' => __( 'Right', 'eazygrid-elementor' ),
+						'icon'  => 'eicon-text-align-right',
+					],
+				],
+				'toggle'               => false,
+				'selectors'            => [
+					'{{WRAPPER}} .tpvg_gallery-wrap .tpvg_gallery-items .tpvg_gallery-item .inner .tpvg-caption' => '{{VALUE}}',
+				],
+				'selectors_dictionary' => [
+					'left'    => '
+						text-align: left;',
+					'center'  => '
+						text-align: center;',
+					'right'   => '
+						text-align: right;',
+					'justify' => 'text-align: justify;',
+				],
+			]
+		);
+
+        $this->add_control(
+			'caption_bg_color',
+			[
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'label' => esc_html__( 'Caption Background Color', 'tiny-video-gallery' ),
+				'default' => '#000000',
+                'selectors' => [
+					'{{WRAPPER}} .tpvg_gallery-item .tpvg-caption' => 'background: {{VALUE}}',
+				],
+                'separator' => 'before'
+			]
+		);
+
+        $this->add_control(
+			'caption_text_color',
+			[
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'label' => esc_html__( 'Caption Text Color', 'tiny-video-gallery' ),
+				'default' => '#ffffff',
+                'selectors' => [
+					'{{WRAPPER}} .tpvg_gallery-item .tpvg-caption' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+        $this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+                'label' => __('Caption Typograghy', 'tiny-video-gallery'),
+				'name' => 'caption_typography',
+				'selector' => '{{WRAPPER}} .tpvg_gallery-item .tpvg-caption',
+			]
+		);
+
+        $this->add_responsive_control(
+			'caption_padding',
+			[
+				'type' => \Elementor\Controls_Manager::DIMENSIONS,
+				'label' => esc_html__( 'Padding', 'plugin-name' ),
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .tpvg_gallery-item .tpvg-caption' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+        $this->end_controls_section();
     }
 
     /**
@@ -95,6 +240,7 @@ class Tiny_Video_Gallery extends Widget_Base {
     protected function render() {
 
         $settings = $this->get_settings_for_display();
-        tpvg_render($settings['column_count']);
+
+        echo tpvg_render($settings['column_count']);
     }
 }

@@ -10,8 +10,6 @@ if (defined('WPB_VC_VERSION')) {
 
 // Check if Elementor installed and activated
 if (did_action('elementor/loaded')) {
-    require(TPVG_DIR_PATH . 'inc/widgets/elementor.php');
-
     // Register Widget
     add_action('elementor/widgets/widgets_registered', 'register_widgets');
 
@@ -23,6 +21,8 @@ if (did_action('elementor/loaded')) {
 }
 
 function register_widgets() {
+    require(TPVG_DIR_PATH . 'inc/widgets/elementor.php');
+    
     \Elementor\Plugin::instance()->widgets_manager->register_widget_type(new TinyVideoGallery\Widgets\Tiny_Video_Gallery());
 }
 

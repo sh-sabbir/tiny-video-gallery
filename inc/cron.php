@@ -280,7 +280,7 @@ class TVG_Cron {
                     }
                 } else {
                     $progress++;
-                    $vid_id = $vid->snippet->title;
+                    $vid_id = $vid->snippet->resourceId->videoId;
                     $vid_title = $vid->snippet->title;
                     $this->status[] = "Inserting video " . $progress . "...";
                     set_transient('tvga_stat', $this->status);
